@@ -5,43 +5,36 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css">
+    <link rel="stylesheet" href="./fontawesome-free-6.3.0-web/css/all.min.css">
+	<script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-database.js"></script>
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 	<title>AdminSite</title>
 </head>
 <body>
 	
 	<!-- SIDEBAR -->
-	<section id="sidebar">
-		<a href="#" class="brand"><i class='bx bxs-smile icon'></i> AdminSite</a>
+	<section id="sidebar" class="hide">
+		<a href="#" class="brand"><i class='bx bxl-html5 icon'></i></i>Dat_Duy</a>
 		<ul class="side-menu">
-			<li><a href="#" class="active"><i class='bx bxs-dashboard icon' ></i> Dashboard</a></li>
-			<li class="divider" data-text="main">Main</li>
+			<li><a href="#" class="active"><i class='bx bxs-home icon' undefined ></i> Home</a></li>
 			<li>
-				<a href="#"><i class='bx bxs-inbox icon' ></i> Elements <i class='bx bx-chevron-right icon-right' ></i></a>
+				<a href="#"><i class='bx bxs-chart icon' ></i> Charts <i class='bx bx-chevron-right icon-right' ></i></a>
 				<ul class="side-dropdown">
-					<li><a href="#">Alert</a></li>
-					<li><a href="#">Badges</a></li>
-					<li><a href="#">Breadcrumbs</a></li>
-					<li><a href="#">Button</a></li>
+					<li><a href="#"><i class='bx bx-bar-chart-alt-2 icon' ></i> Bar </a></li>
+					<li><a href="#"><i class='bx bx-line-chart icon'></i> Line</a></li>
+					<li><a href="#"><i class='bx bx-pie-chart-alt-2 icon' ></i> Pie </a></li>
+					<li><a href="#"><i class='bx bx-network-chart icon'></i> Network </a></li>
 				</ul>
 			</li>
-			<li><a href="#"><i class='bx bxs-chart icon' ></i> Charts</a></li>
-			<li><a href="#"><i class='bx bxs-widget icon' ></i> Widgets</a></li>
-			<li class="divider" data-text="table and forms">Table and forms</li>
-			<li><a href="#"><i class='bx bx-table icon' ></i> Tables</a></li>
-			<li>
-				<a href="#"><i class='bx bxs-notepad icon' ></i> Forms <i class='bx bx-chevron-right icon-right' ></i></a>
-				<ul class="side-dropdown">
-					<li><a href="#">Basic</a></li>
-					<li><a href="#">Select</a></li>
-					<li><a href="#">Checkbox</a></li>
-					<li><a href="#">Radio</a></li>
-				</ul>
-			</li>
+			<li><a href="#"><i class='bx bxs-contact icon'></i> Contact</a></li>
+			<li><a href="#"><i class='bx bxs-info-circle icon'></i> Help</a></li>
+			<li><a href="#"><i class='bx bxs-cog icon' ></i>Setting</a></li>
 		</ul>
 		<div class="ads">
 			<div class="wrapper">
-				<a href="#" class="btn-upgrade">Upgrade</a>
-				<p>Become a <span>PRO</span> member and enjoy <span>All Features</span></p>
+				<li><a href="#" class="btn-upgrade"><i class='bx bx-log-in icon'></i> Log out</a></li>
 			</div>
 		</div>
 	</section>
@@ -53,11 +46,13 @@
 		<nav>
 			<i class='bx bx-menu toggle-sidebar' ></i>
 			<form action="#">
-				<div class="form-group">
-					<input type="text" placeholder="Search...">
-					<i class='bx bx-search icon' ></i>
 				</div>
+				<div class="search-box ">
+					<input class="text active" type="text" placeholder="Search...">
+                	<i class="icon searchBtn"></i>
+            	</div>
 			</form>
+			<!-- <h2 >Good afternoon, welcome to Dashboard </h2> -->
 			<a href="#" class="nav-link">
 				<i class='bx bxs-bell icon' ></i>
 				<span class="badge">5</span>
@@ -68,7 +63,7 @@
 			</a>
 			<span class="divider"></span>
 			<div class="profile">
-				<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
+				<img src="test.jpg" alt="">
 				<ul class="profile-link">
 					<li><a href="#"><i class='bx bxs-user-circle icon' ></i> Profile</a></li>
 					<li><a href="#"><i class='bx bxs-cog' ></i> Settings</a></li>
@@ -80,138 +75,103 @@
 
 		<!-- MAIN -->
 		<main>
-			<h1 class="title">Dashboard</h1>
-			<ul class="breadcrumbs">
-				<li><a href="#">Home</a></li>
-				<li class="divider">/</li>
-				<li><a href="#" class="active">Dashboard</a></li>
-			</ul>
+			<div id="notify"></div>
 			<div class="info-data">
 				<div class="card">
 					<div class="head">
-						<div>
-							<h2>1500</h2>
-							<p>Traffic</p>
-						</div>
-						<i class='bx bx-trending-up icon' ></i>
+						<div class="box_topic">Temp</div>
+                        <div class="number Temp"></div>
+                        <div class="indicator">
+							<i class="fa-solid fa-temperature-three-quarters"></i>
+							<span class="text">Lastest Upgrade</span>
+                        </div>
 					</div>
-					<span class="progress" data-value="40%"></span>
-					<span class="label">40%</span>
 				</div>
-				<div class="card">
+				<div class="card card2">
 					<div class="head">
-						<div>
-							<h2>234</h2>
-							<p>Sales</p>
-						</div>
-						<i class='bx bx-trending-down icon down' ></i>
+						<div class="box_topic" >Humid</div>
+                        <div class="number Humid"></div>
+                        <div class="indicator">
+							<i class="fa-solid fa-temperature-three-quarters"></i>
+							<span class="text">Lastest Upgrade</span>
+                        </div>
 					</div>
-					<span class="progress" data-value="60%"></span>
-					<span class="label">60%</span>
 				</div>
-				<div class="card">
+				<div class="card card3">
 					<div class="head">
-						<div>
-							<h2>465</h2>
-							<p>Pageviews</p>
-						</div>
-						<i class='bx bx-trending-up icon' ></i>
+						<div class="box_topic">Insen</div>
+                        <div class="number Insen"></div>
+                        <div class="indicator">
+							<i class="fa-solid fa-temperature-three-quarters"></i>
+							<span class="text">Lastest Upgrade</span>
+                        </div>
 					</div>
-					<span class="progress" data-value="30%"></span>
-					<span class="label">30%</span>
-				</div>
-				<div class="card">
-					<div class="head">
-						<div>
-							<h2>235</h2>
-							<p>Visitors</p>
-						</div>
-						<i class='bx bx-trending-up icon' ></i>
-					</div>
-					<span class="progress" data-value="80%"></span>
-					<span class="label">80%</span>
 				</div>
 			</div>
-			<div class="data">
-				<div class="content-data">
-					<div class="head">
-						<h3>Sales Report</h3>
-						<div class="menu">
-							<i class='bx bx-dots-horizontal-rounded icon'></i>
-							<ul class="menu-link">
-								<li><a href="#">Edit</a></li>
-								<li><a href="#">Save</a></li>
-								<li><a href="#">Remove</a></li>
-							</ul>
-						</div>
+			
+<!-- -------------------------Chart------------------------------------ -->
+			<div class="chart">
+            	<div class="chart_card">
+                	<p class="chart_tiltle">Bar_Chart</p>
+					<div id="bar-chart" style="width: 520px; min-width: 250px;height: 275px;" >
+
 					</div>
-					<div class="chart">
-						<div id="chart"></div>
+            	</div>
+            	<div class="chart_card">
+                	<p class="chart_tiltle">Area_Chart</p>
+                	<div id="line-chart" style="width: 520px; min-width: 250px; height: 275px;">
+
 					</div>
 				</div>
-				<div class="content-data">
-					<div class="head">
-						<h3>Chatbox</h3>
-						<div class="menu">
-							<i class='bx bx-dots-horizontal-rounded icon'></i>
-							<ul class="menu-link">
-								<li><a href="#">Edit</a></li>
-								<li><a href="#">Save</a></li>
-								<li><a href="#">Remove</a></li>
-							</ul>
-						</div>
+        	</div>
+<!-- -------------------------Tools------------------------------------ -->
+			<div class="tools-content">
+				<div class="door">          
+					<img class="door-img" src="door.png" alt="" >     
+					<div class="toggle-door" id="check-door">
+						<div class="button-door"></div>
 					</div>
-					<div class="chat-box">
-						<p class="day"><span>Today</span></p>
-						<div class="msg">
-							<img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixid=MnwxMjA3fDB8MHxzZWFyY2h8NHx8cGVvcGxlfGVufDB8fDB8fA%3D%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60" alt="">
-							<div class="chat">
-								<div class="profile">
-									<span class="username">Alan</span>
-									<span class="time">18:30</span>
-								</div>
-								<p>Hello</p>
-							</div>
-						</div>
-						<div class="msg me">
-							<div class="chat">
-								<div class="profile">
-									<span class="time">18:30</span>
-								</div>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque voluptatum eos quam dolores eligendi exercitationem animi nobis reprehenderit laborum! Nulla.</p>
-							</div>
-						</div>
-						<div class="msg me">
-							<div class="chat">
-								<div class="profile">
-									<span class="time">18:30</span>
-								</div>
-								<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsam, architecto!</p>
-							</div>
-						</div>
-						<div class="msg me">
-							<div class="chat">
-								<div class="profile">
-									<span class="time">18:30</span>
-								</div>
-								<p>Lorem ipsum, dolor sit amet.</p>
-							</div>
-						</div>
+					<div class="toggle-door-active" id="check-door-active">
+						<div class="button-door-active"></div>
 					</div>
-					<form action="#">
-						<div class="form-group">
-							<input type="text" placeholder="Type...">
-							<button type="submit" class="btn-send"><i class='bx bxs-send' ></i></button>
-						</div>
-					</form>
 				</div>
+				<div class="light">
+					<img class="light-img" src="light-bulb.png" alt="">     
+					<div class="toggle-light" id="check-light">
+						<div class="button-light"></div>
+					</div>
+					<div class="toggle-light-active" id="check-light-active">
+						<div class="button-light-active"></div>
+					</div>
+				</div>
+				<div class="fan"> 
+					<img class="fan-img" src="fan.png" alt="">     
+					<div class="toggle-fan" id="check-fan">
+						<div class="button-fan"></div>
+					</div>
+					<div class="toggle-fan-active" id="check-fan-active">
+						<div class="button-fan-active"></div>
+					</div>
+				</div>
+				<div class="water"> 
+					<img class="water-img" src="water-drop.png" alt="">     
+					<div class="toggle-water" id="check-water">
+						<div class="button-water"></div>
+					</div>
+					<div class="toggle-water-active" id="check-water-active">
+						<div class="button-water-active"></div>
+					</div>
+				</div>
+
 			</div>
+					<button onclick="myFunction()">Show</button>
+					<div id="snackbar">Hello, Tui minh la Duy Dat day</div>
 		</main>
 		<!-- MAIN -->
 	</section>
 	<!-- NAVBAR -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/apexcharts/3.37.1/apexcharts.min.js"></script>
 
-	<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 	<script src="script.js"></script>
 </body>
 </html>

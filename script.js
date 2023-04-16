@@ -1,3 +1,17 @@
+  const firebaseConfig = {
+    apiKey: "AIzaSyCBvLkgt6LqJI-cSKnG_C_eYPhMulz00Fs",
+    authDomain: "iot-duydat.firebaseapp.com",
+    databaseURL: "https://iot-duydat-default-rtdb.firebaseio.com",
+    projectId: "iot-duydat",
+    storageBucket: "iot-duydat.appspot.com",
+    messagingSenderId: "990507859265",
+    appId: "1:990507859265:web:437bcd5c9dca9278abf5c0",
+    measurementId: "G-RMXNPQXJF6"
+  };
+  // // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+
 // SIDEBAR DROPDOWN
 const allDropdown = document.querySelectorAll('#sidebar .side-dropdown');
 const sidebar = document.getElementById('sidebar');
@@ -22,12 +36,14 @@ allDropdown.forEach(item=> {
 })
 
 
-
-
-
 // SIDEBAR COLLAPSE
 const toggleSidebar = document.querySelector('nav .toggle-sidebar');
 const allSideDivider = document.querySelectorAll('#sidebar .divider');
+// toggleSidebar.addEventListener('click', () => {
+//   console.log("clicktosidbar");
+// // sidebar.classList.toggle('hide');
+//   sidebar.style.maxWidth = '260px';
+// });
 
 if(sidebar.classList.contains('hide')) {
 	allSideDivider.forEach(item=> {
@@ -65,39 +81,6 @@ toggleSidebar.addEventListener('click', function () {
 })
 
 
-
-
-sidebar.addEventListener('mouseleave', function () {
-	if(this.classList.contains('hide')) {
-		allDropdown.forEach(item=> {
-			const a = item.parentElement.querySelector('a:first-child');
-			a.classList.remove('active');
-			item.classList.remove('show');
-		})
-		allSideDivider.forEach(item=> {
-			item.textContent = '-'
-		})
-	}
-})
-
-
-
-sidebar.addEventListener('mouseenter', function () {
-	if(this.classList.contains('hide')) {
-		allDropdown.forEach(item=> {
-			const a = item.parentElement.querySelector('a:first-child');
-			a.classList.remove('active');
-			item.classList.remove('show');
-		})
-		allSideDivider.forEach(item=> {
-			item.textContent = item.dataset.text;
-		})
-	}
-})
-
-
-
-
 // PROFILE DROPDOWN
 const profile = document.querySelector('nav .profile');
 const imgProfile = profile.querySelector('img');
@@ -107,91 +90,326 @@ imgProfile.addEventListener('click', function () {
 	dropdownProfile.classList.toggle('show');
 })
 
+function myFunction() {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
+
+// Button search
+
+let input = document.querySelector('.text');
+let searchBtn = document.querySelector('.searchBtn');
+
+searchBtn.onclick = function(){
+    input.classList.toggle('active')
+}
 
 
 
-// MENU
-const allMenu = document.querySelectorAll('main .content-data .head .menu');
+// Button menu
 
-allMenu.forEach(item=> {
-	const icon = item.querySelector('.icon');
-	const menuLink = item.querySelector('.menu-link');
+// let sliderbar = document.querySelector(".sliderbar");
+// let sliderbarBtn= document.querySelector(".sliderbarBtn");
 
-	icon.addEventListener('click', function () {
-		menuLink.classList.toggle('show');
-	})
-})
+// sliderbarBtn.onclick = function () {
+//     sliderbar.classList.toggle("active");
+// }
 
+function myFunction() {
+  var x = document.getElementById("snackbar");
+  x.className = "show";
+  setTimeout(function(){ x.className = x.className.replace("show", ""); }, 3000);
+}
 
+// Chart
+// ----------------- Bar Chart ---------------------------
 
-window.addEventListener('click', function (e) {
-	if(e.target !== imgProfile) {
-		if(e.target !== dropdownProfile) {
-			if(dropdownProfile.classList.contains('show')) {
-				dropdownProfile.classList.remove('show');
-			}
-		}
-	}
+let a = [];
+let b = [];
+let firebaseRef = firebase.database().ref("iots");
+firebaseRef.on("value", function (snapshot) {
+  snapshot.forEach(function (element) {
+    a = element.val();
+    b.push(a);
+    document.querySelector('.Temp').innerHTML=b[2] + '°C';
+    document.querySelector('.Humid').innerHTML=b[0]+ '%';
+    document.querySelector('.Insen').innerHTML=b[1]+' Lux';
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Properties", "", { role: "style" }],
+        ["Temp", b[2], "color: #33ff66"],
+        ["Humid", b[0], "color: #ffcc66"],
+        ["Insen", b[1], "color: #77ccff"],
+      ]);
+      var options = {
+        title: "Visualize Your Chicken Coop Stats",
+      };
 
-	allMenu.forEach(item=> {
-		const icon = item.querySelector('.icon');
-		const menuLink = item.querySelector('.menu-link');
+      var chart = new google.visualization.ColumnChart(
+        document.getElementById("bar-chart")
+      );
+      chart.draw(data, options);
+    }
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+  });
+});
 
-		if(e.target !== icon) {
-			if(e.target !== menuLink) {
-				if (menuLink.classList.contains('show')) {
-					menuLink.classList.remove('show')
-				}
-			}
-		}
-	})
-})
+// ----------------------- Line Chart -------------------------------
 
+let c = [];
+let d = [];
 
+firebaseRef.on("value", function (snapshot) {
+  snapshot.forEach(function (element) {
+    c = element.val();
+    d.push(c);
+    function drawChart() {
+      var data = google.visualization.arrayToDataTable([
+        ["Properties", "Data"],
+        ["Temp", d[2]],
+        ["Humid", d[0]],
+        ["Insen", d[1]],
+      ]);
+      var options = {
+        title: "Visualize Your Chicken Coop Stats",
+        curveType: "function",
+        legend: { position: "bottom" },
+        colors: ["#CC3300"],
+      };
 
+      var chart = new google.visualization.LineChart(
+        document.getElementById("line-chart")
+      );
 
+      chart.draw(data, options);
+    }
+    google.charts.load("current", { packages: ["corechart"] });
+    google.charts.setOnLoadCallback(drawChart);
+  });
+});
 
-// PROGRESSBAR
-const allProgress = document.querySelectorAll('main .card .progress');
+// ------------------- Button-door ---------------------------
 
-allProgress.forEach(item=> {
-	item.style.setProperty('--value', item.dataset.value)
-})
-
-
-
-
-
-
-// APEXCHART
-var options = {
-  series: [{
-  name: 'series1',
-  data: [31, 40, 28, 51, 42, 109, 100]
-}, {
-  name: 'series2',
-  data: [11, 32, 45, 32, 34, 52, 41]
-}],
-  chart: {
-  height: 350,
-  type: 'area'
-},
-dataLabels: {
-  enabled: false
-},
-stroke: {
-  curve: 'smooth'
-},
-xaxis: {
-  type: 'datetime',
-  categories: ["2018-09-19T00:00:00.000Z", "2018-09-19T01:30:00.000Z", "2018-09-19T02:30:00.000Z", "2018-09-19T03:30:00.000Z", "2018-09-19T04:30:00.000Z", "2018-09-19T05:30:00.000Z", "2018-09-19T06:30:00.000Z"]
-},
-tooltip: {
-  x: {
-    format: 'dd/MM/yy HH:mm'
-  },
-},
+let doorOn = document.querySelector(".toggle-door");
+doorOn.onclick = function () {
+  doorOn.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'door': 1
+  });
+};
+let doorOff = document.querySelector(".toggle-door-active");
+doorOff.onclick = function () {
+  doorOff.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'door': 0
+  });
 };
 
-var chart = new ApexCharts(document.querySelector("#chart"), options);
-chart.render();
+let door = firebase.database().ref("tools/door"); 
+door.on("value", function (snap){
+  let doorStatus=snap.val();
+  if(doorStatus == 0 ){
+    document.getElementById("check-door").style.display="block"
+    document.getElementById("check-door-active").style.display="none"
+    document.querySelector('.door-img').src='./door.png'
+    notify({
+      title: 'Error',
+      message: 'Tool is off',
+      type: 'error',
+      duration: 1000
+    });  
+  }
+  else{
+    document.getElementById("check-door").style.display="none"
+    document.getElementById("check-door-active").style.display="block"
+    document.querySelector('.door-img').src='./door1.png'
+    notify({
+      title: 'Success',
+      message: 'Tool is on',
+      type: 'success',
+      duration: 1000
+    });  
+  }
+});
+
+// ------------------- Button-light ---------------------------
+
+let lightOn = document.querySelector(".toggle-light");
+lightOn.onclick = function () {
+  lightOn.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'light': 1
+  });
+};
+let lightOff = document.querySelector(".toggle-light-active");
+lightOff.onclick = function () {
+  lightOff.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'light': 0
+  });
+};
+
+let light = firebase.database().ref("tools/light");
+light.on("value", function (snap){
+  let lightStatus=snap.val();
+  if(lightStatus == 0 ){
+    document.getElementById("check-light").style.display="block"
+    document.getElementById("check-light-active").style.display="none"
+    document.querySelector('.light-img').src='./light-bulb.png'
+    notify({
+      title: 'Error',
+      message: 'Tool is off',
+      type: 'error',
+      duration: 1000
+    });  
+  }
+  else{
+    document.getElementById("check-light").style.display="none"
+    document.getElementById("check-light-active").style.display="block"
+    document.querySelector('.light-img').src='./light-bulb1.png'
+    notify({
+      title: 'Success',
+      message: 'Tool is on',
+      type: 'success',
+      duration: 1000
+    });  
+  }
+});
+
+// ------------------- Button-fan ---------------------------
+
+let fanOn = document.querySelector(".toggle-fan");
+fanOn.onclick = function () {
+  fanOn.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'fan': 1
+  });
+  
+};
+let fanOff = document.querySelector(".toggle-fan-active");
+fanOff.onclick = function () {
+  fanOff.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'fan': 0
+  });
+};
+
+let fan = firebase.database().ref("tools/fan");
+fan.on("value", function (snap){
+  let fanStatus=snap.val();
+  if(fanStatus == 0 ){
+    document.getElementById("check-fan").style.display="block"
+    document.getElementById("check-fan-active").style.display="none"
+    document.querySelector('.fan-img').src='./fan.png';
+    notify({
+      title: 'Error',
+      message: 'Tool is off',
+      type: 'error',
+      duration: 1000
+    });  
+  }
+  else{
+    document.getElementById("check-fan").style.display="none"
+    document.getElementById("check-fan-active").style.display="block"
+    document.querySelector('.fan-img').src='./fan.gif';
+    notify({
+      title: 'Success',
+      message: 'Tool is on',
+      type: 'success',
+      duration: 1000
+    })
+  }
+});
+
+// ------------------- Button-water ---------------------------
+
+let waterOn = document.querySelector(".toggle-water");
+waterOn.onclick = function () {
+  waterOn.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'water': 1,
+  }
+  );
+};
+let waterOff = document.querySelector(".toggle-water-active");
+waterOff.onclick = function () {
+  waterOff.classList.toggle("active"); 
+  firebase.database().ref('tools').update({
+    'water': 0
+  });
+};
+
+let water = firebase.database().ref("tools/water");
+water.on("value", function (snap){
+  let waterStatus=snap.val();
+  if(waterStatus == 0 ){
+    document.querySelector('.water-img').src='./water-drop.png'
+    document.getElementById("check-water").style.display="block"
+    document.getElementById("check-water-active").style.display="none"
+    notify({
+      title: 'Error',
+      message: 'Tool is off',
+      type: 'error',
+      duration: 1000
+    });  
+  }
+  else{
+    document.getElementById("check-water").style.display="none"
+    document.getElementById("check-water-active").style.display="block"
+    document.querySelector('.water-img').src='./water.gif'
+    notify({
+      title: 'Success',
+      message: 'Tool is on',
+      type: 'success',
+      duration: 1000
+    })
+  }
+  }
+);
+
+//-------------------------- Notify message  -------------------------
+function notify({
+  title = '',
+  message='',
+  type='info',
+  duration=3000
+}) {
+  const main = document.getElementById('notify');
+    if(main){
+      const notify = document.createElement('div');
+      const icons= {
+        success: "fa-solid fa-circle-check",
+        error: "fa-solid fa-circle-exclamation",
+      };
+      const icon = icons[type];
+      const delay=(duration/1000).toFixed(2);
+
+      notify.classList.add('notify', `notify--${type}`);
+      notify.style.animation=`slideInLeft ease .3s, fadeOut linear 1s ${delay}s forwards`;
+      notify.innerHTML= `
+          <div class="notify-icon">
+            <i class="${icon}"></i>
+          </div>
+          <div class="notify-body">
+            <h3 class="notify-title">${title}</h3>
+            <p class="notify-message">${message}</p>
+          </div>
+          <div class="notify-close">
+            <i class="fa-solid fa-xmark"></i>
+          </div>
+      `;
+      main.appendChild(notify);
+      setTimeout(function(){
+        main.removeChild(notify);
+      }, duration + 1000);
+    };
+  }
+
+// const nextPageBtn = document.querySelector('bx bx-log-in icon');
+
+// nextPageBtn.addEventListener('click', function() {
+//   // Chuyển đến trang mới ở đây
+//   window.location.href = 'https://chat.openai.com';
+// });
