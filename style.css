@@ -226,13 +226,7 @@ nav {
 	position: sticky;
 	top: 0;
 	left: 0;
-	z-index: 100;
-	
-}
-nav h2 {
-	position: relative;
-	width: 100%;
-	color: #f07c64;
+	z-index: 100;	
 }
 nav .toggle-sidebar {
 	font-size: 50px;
@@ -519,52 +513,50 @@ main .info-data {
     width: 100%;
     justify-content: space-between;
     padding: 0 20px;
-    height: 115px;
+    height: 100px;
+    
 }
 
 
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 main .info-data .card {
-	width: calc(100%/3 - 15px);
-
+	width: calc(100%/3 - 50px);
     background-color: #fff;
     border-radius: 10px;
-    height: 150px;
+    height: 100px;
     margin-bottom: 16px;
-    border-left: 5px solid rgb(255, 0, 0);
-
-	
+    border-left: 5px solid #ff0000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-main .info-data .card .head {
-    /* width: calc(100%/3 - 15px); */
-    width: 33.33333% - 15px;
-    padding: 20px 100px;
+/* main .info-data .card .head {
+    
+    width: 33.33333% - 150px;
+    padding: 2px 100px;
     display: flex;
     align-items: center;
     justify-content: start;
     flex-wrap: wrap;
-}
+} */
 
 main .info-data .card2 {
-	border-left: 5px solid rgb(17, 0, 255);
+	border-left: 5px solid #77ccff;
 }
 main .info-data .card3 {
-	border-left: 5px solid rgb(17, 244, 62);
-}
-main .info-data .card4 {
-	border-left: 5px solid rgb(236, 25, 193);
+	border-left: 5px solid #ffcc66;
 }
 main .info-data .box_topic {
-    font-size: 30px;
+    font-size: 25px;
     font-weight: bold;
     font-weight: 500px;
     width: 180px;
 }
-/*  */
+
 main .info-data .number {
-    /* width: 100%; */
-    font-size: 35px;
+ 
+    font-size: 30px;
     margin-top: -5px;
     width: 180px;
 
@@ -584,7 +576,6 @@ main .info-data .indicator i {
 }
 
 
-
 /* --------------------------------------------------------------------------------------------------------------------------------- */
 
 .active ~ .main .chart{
@@ -599,7 +590,7 @@ main .chart {
     width: 100%; 
     margin-top: 0px;
 	display: grid;     
-    margin-top: 50px;                                                  
+                                                
 }
 
 .chart {
@@ -611,8 +602,9 @@ main .chart {
 }
 
 .chart_card {
+    
 	background-color: #fff;   
-	height: 330px;
+	height: 380px;
     padding: 25px;
     box-sizing: border-box;
     -webkit-column-break-inside: avoid;
@@ -632,7 +624,7 @@ main .chart {
     font-style: italic;
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1300px) {
     main .info-data {
         display: flex;
         flex-wrap: wrap;
@@ -642,10 +634,7 @@ main .chart {
     }
 
     main .chart {
-        margin-top: 200px;
-    }
-    main .info-data .card .head {
-        padding: 20px 50px;
+        margin-top: 120px;
     }
     nav .nav-link{
         display: none;
@@ -658,13 +647,39 @@ main .chart {
     }
 }
 
+@media screen and (max-width: 750px) {
+    main .info-data {
+        display: flex;
+        flex-wrap: wrap;
+    }
+    main .info-data .card {
+        width: 70%;
+    }
+
+    main .chart {
+        margin-top: 230px;
+    }
+    nav .nav-link{
+        display: none;
+    }
+
+    main .chart {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    main .tools-content {
+        display: flex;
+        flex-wrap: wrap;       
+    }
+}
 
 /* --------------------------------tools-content ----------------------*/
 main .tools-content{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    margin: 30px 20px;
+    margin: 40px 20px;
 }
 /* ---------------------door ---------------------------------- */
 .tools-content .door{

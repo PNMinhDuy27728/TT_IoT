@@ -130,30 +130,69 @@ let b = [];
 let firebaseRef = firebase.database().ref("iots");
 firebaseRef.on("value", function (snapshot) {
   snapshot.forEach(function (element) {
-    a = element.val();
-    b.push(a);
-    document.querySelector('.Temp').innerHTML=b[2] + '°C';
-    document.querySelector('.Humid').innerHTML=b[0]+ '%';
-    document.querySelector('.Insen').innerHTML=b[1]+' Lux';
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ["Properties", "", { role: "style" }],
-        ["Temp", b[2], "color: #33ff66"],
-        ["Humid", b[0], "color: #ffcc66"],
-        ["Insen", b[1], "color: #77ccff"],
-      ]);
-      var options = {
-        title: "Visualize Your Chicken Coop Stats",
-      };
-
-      var chart = new google.visualization.ColumnChart(
-        document.getElementById("bar-chart")
-      );
-      chart.draw(data, options);
+    a.push(element.val())
+    b[0]=a[0]
+    b[1]=a[1]
+    b[2]=a[2]
+    if(b[2] >= 30 ){
+      firebase.database().ref('tools').update({
+        'fan': true
+      });
     }
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart);
+    else 
+    {
+      firebase.database().ref('tools').update({
+        'fan': false
+      });
+    }
+    
+
+    if(b[0] <= 60 || b[2] >= 35 ){
+      firebase.database().ref('tools').update({
+        'water': true
+      });
+    }
+    else 
+    {
+      firebase.database().ref('tools').update({
+        'water': false
+      });
+    }
+
+    if(b[1] <= 200 ){
+      firebase.database().ref('tools').update({
+        'light': true
+      });
+    }
+    else
+    {
+      firebase.database().ref('tools').update({
+        'light': false
+      });
+    }
   });
+  a.splice(0,3)
+  document.querySelector('.Temp').innerHTML=b[2] + '°C';
+  document.querySelector('.Humid').innerHTML=b[0]+ '%';
+  document.querySelector('.Insen').innerHTML=b[1]+" "+'Lux';
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ["Properties", "", { role: "style" }],
+      ["Temp", b[2], "color: #FF0000"],
+      ["Humid", b[0], "color: #77ccff"],
+      ["Insen", b[1], "color: #ffcc66"],
+    ]);
+    var options = {
+      title: "Visualize Your Chicken Coop Stats",
+    };
+
+    var chart = new google.visualization.ColumnChart(
+      document.getElementById("bar-chart")
+    );
+    chart.draw(data, options);
+  }
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawChart);
 });
 
 // ----------------------- Line Chart -------------------------------
@@ -163,31 +202,34 @@ let d = [];
 
 firebaseRef.on("value", function (snapshot) {
   snapshot.forEach(function (element) {
-    c = element.val();
-    d.push(c);
-    function drawChart() {
-      var data = google.visualization.arrayToDataTable([
-        ["Properties", "Data"],
-        ["Temp", d[2]],
-        ["Humid", d[0]],
-        ["Insen", d[1]],
-      ]);
-      var options = {
-        title: "Visualize Your Chicken Coop Stats",
-        curveType: "function",
-        legend: { position: "bottom" },
-        colors: ["#CC3300"],
-      };
-
-      var chart = new google.visualization.LineChart(
-        document.getElementById("line-chart")
-      );
-
-      chart.draw(data, options);
-    }
-    google.charts.load("current", { packages: ["corechart"] });
-    google.charts.setOnLoadCallback(drawChart);
+    c.push(element.val())
+    d[0]=c[0]
+    d[1]=c[1]
+    d[2]=c[2]
   });
+  c.splice(0,3)
+  function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+      ["Properties", "Data"],
+      ["Temp", d[2]],
+      ["Humid", d[0]],
+      ["Insen", d[1]],
+    ]);
+    var options = {
+      title: "Visualize Your Chicken Coop Stats",
+      curveType: "function",
+      legend: { position: "bottom" },
+      colors: ["#CC3300"],
+    };
+
+    var chart = new google.visualization.LineChart(
+      document.getElementById("line-chart")
+    );
+
+    chart.draw(data, options);
+  }
+  google.charts.load("current", { packages: ["corechart"] });
+  google.charts.setOnLoadCallback(drawChart);
 });
 
 // ------------------- Button-door ---------------------------
@@ -196,14 +238,14 @@ let doorOn = document.querySelector(".toggle-door");
 doorOn.onclick = function () {
   doorOn.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'door': 1
+    'door': true
   });
 };
 let doorOff = document.querySelector(".toggle-door-active");
 doorOff.onclick = function () {
   doorOff.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'door': 0
+    'door': false
   });
 };
 
@@ -240,14 +282,14 @@ let lightOn = document.querySelector(".toggle-light");
 lightOn.onclick = function () {
   lightOn.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'light': 1
+    'light': true
   });
 };
 let lightOff = document.querySelector(".toggle-light-active");
 lightOff.onclick = function () {
   lightOff.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'light': 0
+    'light': false
   });
 };
 
@@ -284,7 +326,7 @@ let fanOn = document.querySelector(".toggle-fan");
 fanOn.onclick = function () {
   fanOn.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'fan': 1
+    'fan': true
   });
   
 };
@@ -292,7 +334,7 @@ let fanOff = document.querySelector(".toggle-fan-active");
 fanOff.onclick = function () {
   fanOff.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'fan': 0
+    'fan': false
   });
 };
 
@@ -329,7 +371,7 @@ let waterOn = document.querySelector(".toggle-water");
 waterOn.onclick = function () {
   waterOn.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'water': 1,
+    'water': true
   }
   );
 };
@@ -337,7 +379,7 @@ let waterOff = document.querySelector(".toggle-water-active");
 waterOff.onclick = function () {
   waterOff.classList.toggle("active"); 
   firebase.database().ref('tools').update({
-    'water': 0
+    'water': false
   });
 };
 

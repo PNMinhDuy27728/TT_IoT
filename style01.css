@@ -1,0 +1,31 @@
+body {
+	margin: 0;
+	padding: 0;
+	font-family: Arial, sans-serif;
+	background: #ffecec;
+}
+
+header {
+	color: #000000;
+	padding: 20px;
+	text-align: center;
+}
+
+section {
+	text-align: center;
+	padding: 10px;
+	background: #ff9f8f;
+	font-size: 50px;
+	color: #fff;
+	border-radius: 50px;
+}
+.btn-upgrade{
+	position: relative;
+	left: 41%;
+	top: 100px;
+	padding: 20px 20px;
+	font-size: 30px;
+	background-color: #28abbc;
+	color: #000000;
+	border-radius: 10px;
+}

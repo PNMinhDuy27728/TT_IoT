@@ -15,7 +15,7 @@
 <body>
 	
 	<!-- SIDEBAR -->
-	<section id="sidebar" class="hide">
+	<section id="sidebar" >
 		<a href="#" class="brand"><i class='bx bxl-html5 icon'></i></i>Dat_Duy</a>
 		<ul class="side-menu">
 			<li><a href="#" class="active"><i class='bx bxs-home icon' undefined ></i> Home</a></li>
@@ -34,7 +34,7 @@
 		</ul>
 		<div class="ads">
 			<div class="wrapper">
-				<li><a href="#" class="btn-upgrade"><i class='bx bx-log-in icon'></i> Log out</a></li>
+				<li><a href="checkout.html" class="btn-upgrade"><i class='bx bx-log-in icon'></i> Log out</a></li>
 			</div>
 		</div>
 	</section>
@@ -80,32 +80,40 @@
 				<div class="card">
 					<div class="head">
 						<div class="box_topic">Temp</div>
-                        <div class="number Temp"></div>
-                        <div class="indicator">
-							<i class="fa-solid fa-temperature-three-quarters"></i>
-							<span class="text">Lastest Upgrade</span>
-                        </div>
+                        <div class="number Temp" style="color: #ff0000; font-size: 35px;"></div>
+                        <div class="indicator">						
+							<span class="text" style="width: 200px;">Latest Upgrade</span>
+                        </div>					
 					</div>
+					<div class="z">	
+						<img class="z"  src="coldz.png" alt="">	
+					</div>	
 				</div>
 				<div class="card card2">
+					
 					<div class="head">
 						<div class="box_topic" >Humid</div>
-                        <div class="number Humid"></div>
-                        <div class="indicator">
-							<i class="fa-solid fa-temperature-three-quarters"></i>
-							<span class="text">Lastest Upgrade</span>
+                        <div class="number Humid" style="color: #77ccff; font-size: 35px;"></div>
+                        <div class="indicator">						
+							<span class="text" style="width: 200px;" >Latest Upgrade</span>
                         </div>
 					</div>
+					<div class="z">	
+						<img class="z"  src="humidityz.png" alt="">	
+					</div>	
 				</div>
 				<div class="card card3">
+					
 					<div class="head">
 						<div class="box_topic">Insen</div>
-                        <div class="number Insen"></div>
+                        <div class="number Insen" style="color: #ffcc66; font-size: 35px;"></div>
                         <div class="indicator">
-							<i class="fa-solid fa-temperature-three-quarters"></i>
-							<span class="text">Lastest Upgrade</span>
+							<span class="text" style="width: 200px;">Latest Upgrade</span>
                         </div>
 					</div>
+					<div class="z">	
+						<img class="z"  src="lightz.png" alt="">	
+					</div>	
 				</div>
 			</div>
 			
@@ -113,13 +121,12 @@
 			<div class="chart">
             	<div class="chart_card">
                 	<p class="chart_tiltle">Bar_Chart</p>
-					<div id="bar-chart" style="width: 520px; min-width: 250px;height: 275px;" >
-
+					<div id="bar-chart" style="width: 520px; min-width: 250px; height: 380px;" >
 					</div>
             	</div>
             	<div class="chart_card">
                 	<p class="chart_tiltle">Area_Chart</p>
-                	<div id="line-chart" style="width: 520px; min-width: 250px; height: 275px;">
+                	<div id="line-chart" style="width: 520px; min-width: 250px; height: 390px;">
 
 					</div>
 				</div>
@@ -136,7 +143,7 @@
 					</div>
 				</div>
 				<div class="light">
-					<img class="light-img" src="light-bulb.png" alt="">     
+					<img class="light-img" src="light-bulb.png"  alt="">     
 					<div class="toggle-light" id="check-light">
 						<div class="button-light"></div>
 					</div>
